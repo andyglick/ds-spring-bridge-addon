@@ -18,21 +18,29 @@
     under the License.
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+  http://maven.apache.org/maven-v4_0_0.xsd">
 
-    <packaging>pom</packaging>
+  <modelVersion>4.0.0</modelVersion>
 
+  <parent>
     <groupId>org.os890.ds.addon</groupId>
-    <artifactId>ds-spring-addon-examples-project</artifactId>
-
-    <name>DS-Spring-Bridge Add-on Examples Project</name>
+    <artifactId>ds-spring-addon-project</artifactId>
     <version>1.0.0</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
 
-    <modules>
-        <module>jsf-example_cdi-two-way</module>
-        <module>jsf-example_cdi_in_spring</module>
-    </modules>
+  <packaging>pom</packaging>
+
+  <artifactId>ds-spring-addon-examples-project</artifactId>
+  <version>1.0.0</version>
+
+  <name>DS-Spring-Bridge Add-on Examples Project</name>
+
+  <modules>
+    <module>jsf-example_cdi-two-way</module>
+    <module>jsf-example_cdi_in_spring</module>
+  </modules>
 
 </project>
