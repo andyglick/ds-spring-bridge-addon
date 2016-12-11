@@ -25,6 +25,7 @@ import org.os890.test.ds.addon.spring.bean.spring.SingletonSpringBean;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
+@SuppressWarnings("CdiInjectionPointsInspection")
 @ApplicationScoped
 public class ApplicationScopedCdiBean
 {

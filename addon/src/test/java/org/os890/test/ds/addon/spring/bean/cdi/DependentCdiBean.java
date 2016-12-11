@@ -25,6 +25,7 @@ import org.os890.test.ds.addon.spring.bean.spring.SingletonSpringBean;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 
+@SuppressWarnings("CdiInjectionPointsInspection")
 @Dependent
 public class DependentCdiBean
 {
