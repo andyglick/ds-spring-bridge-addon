@@ -13,8 +13,7 @@ the library references are/were out of date, so I will be bumping all
 of those and reducing the crufty technical debt.
 
 In addition some of the logic is overly complex and could use some TLC
-and the application of Java 8 simplifications with lambda and such. And
+and the application of Java 8 simplifications with lambdas and such. And
 the code isn't well tested, so there are/will be lots of fun things to
 do. Voila, voila (pronounced voyla voyla, and not at all in the proper
-French
-manner) HEH!
+French manner) HEH!
