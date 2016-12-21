@@ -6,7 +6,7 @@ since 2004 and I have been pretty interested in at least finding out
 what capabilities the JEE CDI containers might offer, so I looked for
 and apparently found a competent bidirectional bridge implementation.
 
-WHICH IS SO COOL THAT I COULD START JUMPING UP AND DOWN
+THIS IS SO COOL THAT I COULD START JUMPING UP AND DOWN
 
 Anyway, the code that I found is all at least 2 years old, so many of
 the library references are/were out of date, so I will be bumping all
