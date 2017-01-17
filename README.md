@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/andyglick/ds-spring-bridge-addon.svg?branch=1.0.0)](https://travis-ci.org/andyglick/ds-spring-bridge-addon)
+
 ds-spring-bridge-addon
 ======================
 
