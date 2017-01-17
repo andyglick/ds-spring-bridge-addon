@@ -47,7 +47,7 @@
 
   <modules>
     <module>addon</module>
-    <module>examples</module>
+    <!--<module>examples</module>-->
   </modules>
 
   <dependencyManagement>

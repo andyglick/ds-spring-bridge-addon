@@ -4,7 +4,7 @@ language: java
 jdk:
   - oraclejdk8
   
-script: mvn clean verify
+script: mvn clean verify -P openwebbeans,simple-logging
 
-after_success:
-  - mvn clean test jacoco:report coveralls:report -DrepoToken=XkBUcBKdzhG7VnpUuBlyfudlo3S61UKRB
+# after_success:
+#  - mvn clean test jacoco:report coveralls:report -DrepoToken=XkBUcBKdzhG7VnpUuBlyfudlo3S61UKRB
