@@ -16,6 +16,8 @@ In addition some of the logic is overly complex and could use some TLC
 and the application of Java 8 simplifications with lambdas and such. And
 the code isn't well tested, so there are/will be lots of fun things to
 do. Voila, voila (pronounced voyla voyla, and not at all in the proper
-French manner) HEH!
+French manner)
 
-(active work is being done, at least for now on the 1.0.0 branch)
+active work is being done, at least for now on the 1.0.0 branch, with
+progress merged into master
+

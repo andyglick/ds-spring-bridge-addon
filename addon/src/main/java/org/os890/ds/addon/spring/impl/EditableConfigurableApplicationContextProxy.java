@@ -25,8 +25,15 @@ import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
-import org.springframework.context.*;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationEvent;
+import org.springframework.context.ApplicationListener;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.MessageSourceResolvable;
+import org.springframework.context.NoSuchMessageException;
+import org.springframework.core.ResolvableType;
 import org.springframework.core.env.ConfigurableEnvironment;
+import org.springframework.core.io.ProtocolResolver;
 import org.springframework.core.io.Resource;
 
 import java.io.IOException;
@@ -34,306 +41,346 @@ import java.lang.annotation.Annotation;
 import java.util.Locale;
 import java.util.Map;
 
+@SuppressWarnings("WeakerAccess")
 @Exclude
 public class EditableConfigurableApplicationContextProxy implements ConfigurableApplicationContext
 {
-    private ConfigurableApplicationContext wrapped;
+  private ConfigurableApplicationContext wrapped;
 
-    public EditableConfigurableApplicationContextProxy(ConfigurableApplicationContext wrapped)
-    {
-        this.wrapped = wrapped;
-    }
+  public EditableConfigurableApplicationContextProxy(ConfigurableApplicationContext wrapped)
+  {
+    this.wrapped = wrapped;
+  }
 
-    public void setWrapped(ConfigurableApplicationContext wrapped)
-    {
-        this.wrapped = wrapped;
-    }
+  public void setWrapped(ConfigurableApplicationContext wrapped)
+  {
+    this.wrapped = wrapped;
+  }
 
-    @Override
-    public void setId(String id)
-    {
-        wrapped.setId(id);
-    }
+  @Override
+  public void setId(String id)
+  {
+    wrapped.setId(id);
+  }
 
-    @Override
-    public void setParent(ApplicationContext parent)
-    {
-        wrapped.setParent(parent);
-    }
+  @Override
+  public void setParent(ApplicationContext parent)
+  {
+    wrapped.setParent(parent);
+  }
 
-    @Override
-    public ConfigurableEnvironment getEnvironment()
-    {
-        return wrapped.getEnvironment();
-    }
+  @Override
+  public ConfigurableEnvironment getEnvironment()
+  {
+    return wrapped.getEnvironment();
+  }
 
-    @Override
-    public void setEnvironment(ConfigurableEnvironment environment)
-    {
-        wrapped.setEnvironment(environment);
-    }
+  @Override
+  public void setEnvironment(ConfigurableEnvironment environment)
+  {
+    wrapped.setEnvironment(environment);
+  }
 
-    @Override
-    public void addBeanFactoryPostProcessor(BeanFactoryPostProcessor beanFactoryPostProcessor)
-    {
-        wrapped.addBeanFactoryPostProcessor(beanFactoryPostProcessor);
-    }
+  @Override
+  public void addBeanFactoryPostProcessor(BeanFactoryPostProcessor beanFactoryPostProcessor)
+  {
+    wrapped.addBeanFactoryPostProcessor(beanFactoryPostProcessor);
+  }
 
-    @Override
-    public void addApplicationListener(ApplicationListener<?> listener)
-    {
-        wrapped.addApplicationListener(listener);
-    }
+  @Override
+  public void addApplicationListener(ApplicationListener<?> listener)
+  {
+    wrapped.addApplicationListener(listener);
+  }
 
-    @Override
-    public void refresh() throws BeansException, IllegalStateException
-    {
-        wrapped.refresh();
-    }
+  @Override
+  public void addProtocolResolver(ProtocolResolver resolver)
+  {
+    /**
+     protocol resolvers not implemented\
+     */
+    throw new UnsupportedOperationException("ProtocolResolvers not being registered");
+  }
 
-    @Override
-    public void registerShutdownHook()
-    {
-        wrapped.registerShutdownHook();
-    }
+  @Override
+  public void refresh() throws BeansException, IllegalStateException
+  {
+    wrapped.refresh();
+  }
 
-    @Override
-    public void close()
-    {
-        wrapped.close();
-    }
+  @Override
+  public void registerShutdownHook()
+  {
+    wrapped.registerShutdownHook();
+  }
 
-    @Override
-    public boolean isActive()
-    {
-        return wrapped.isActive();
-    }
+  @Override
+  public void close()
+  {
+    wrapped.close();
+  }
 
-    @Override
-    public ConfigurableListableBeanFactory getBeanFactory() throws IllegalStateException
-    {
-        return wrapped.getBeanFactory();
-    }
+  @Override
+  public boolean isActive()
+  {
+    return wrapped.isActive();
+  }
 
-    @Override
-    public String getId()
-    {
-        return wrapped.getId();
-    }
+  @Override
+  public ConfigurableListableBeanFactory getBeanFactory() throws IllegalStateException
+  {
+    return wrapped.getBeanFactory();
+  }
 
-    @Override
-    public String getApplicationName()
-    {
-        return wrapped.getApplicationName();
-    }
+  @Override
+  public String getId()
+  {
+    return wrapped.getId();
+  }
 
-    @Override
-    public String getDisplayName()
-    {
-        return wrapped.getDisplayName();
-    }
+  @Override
+  public String getApplicationName()
+  {
+    return wrapped.getApplicationName();
+  }
 
-    @Override
-    public long getStartupDate()
-    {
-        return wrapped.getStartupDate();
-    }
+  @Override
+  public String getDisplayName()
+  {
+    return wrapped.getDisplayName();
+  }
 
-    @Override
-    public ApplicationContext getParent()
-    {
-        return wrapped.getParent();
-    }
+  @Override
+  public long getStartupDate()
+  {
+    return wrapped.getStartupDate();
+  }
 
-    @Override
-    public AutowireCapableBeanFactory getAutowireCapableBeanFactory() throws IllegalStateException
-    {
-        return wrapped.getAutowireCapableBeanFactory();
-    }
+  @Override
+  public ApplicationContext getParent()
+  {
+    return wrapped.getParent();
+  }
 
-    @Override
-    public boolean containsBeanDefinition(String beanName)
-    {
-        return wrapped.containsBeanDefinition(beanName);
-    }
+  @Override
+  public AutowireCapableBeanFactory getAutowireCapableBeanFactory() throws IllegalStateException
+  {
+    return wrapped.getAutowireCapableBeanFactory();
+  }
 
-    @Override
-    public int getBeanDefinitionCount()
-    {
-        return wrapped.getBeanDefinitionCount();
-    }
+  @Override
+  public boolean containsBeanDefinition(String beanName)
+  {
+    return wrapped.containsBeanDefinition(beanName);
+  }
 
-    @Override
-    public String[] getBeanDefinitionNames()
-    {
-        return wrapped.getBeanDefinitionNames();
-    }
+  @Override
+  public int getBeanDefinitionCount()
+  {
+    return wrapped.getBeanDefinitionCount();
+  }
 
-    @Override
-    public String[] getBeanNamesForType(Class<?> type)
-    {
-        return wrapped.getBeanNamesForType(type);
-    }
+  @Override
+  public String[] getBeanDefinitionNames()
+  {
+    return wrapped.getBeanDefinitionNames();
+  }
 
-    @Override
-    public String[] getBeanNamesForType(Class<?> type, boolean includeNonSingletons, boolean allowEagerInit)
-    {
-        return wrapped.getBeanNamesForType(type, includeNonSingletons, allowEagerInit);
-    }
+  @Override
+  public String[] getBeanNamesForType(ResolvableType type)
+  {
+    throw new UnsupportedOperationException("resolvable types not supported");
+  }
 
-    @Override
-    public <T> Map<String, T> getBeansOfType(Class<T> type) throws BeansException
-    {
-        return wrapped.getBeansOfType(type);
-    }
+  @Override
+  public String[] getBeanNamesForType(Class<?> type)
+  {
+    return wrapped.getBeanNamesForType(type);
+  }
 
-    @Override
-    public <T> Map<String, T> getBeansOfType(Class<T> type, boolean includeNonSingletons, boolean allowEagerInit) throws BeansException
-    {
-        return wrapped.getBeansOfType(type, includeNonSingletons, allowEagerInit);
-    }
+  @Override
+  public String[] getBeanNamesForType(Class<?> type, boolean includeNonSingletons, boolean allowEagerInit)
+  {
+    return wrapped.getBeanNamesForType(type, includeNonSingletons, allowEagerInit);
+  }
 
-    @Override
-    public Map<String, Object> getBeansWithAnnotation(Class<? extends Annotation> annotationType) throws BeansException
-    {
-        return wrapped.getBeansWithAnnotation(annotationType);
-    }
+  @Override
+  public <T> Map<String, T> getBeansOfType(Class<T> type) throws BeansException
+  {
+    return wrapped.getBeansOfType(type);
+  }
 
-    @Override
-    public <A extends Annotation> A findAnnotationOnBean(String beanName, Class<A> annotationType)
-    {
-        return wrapped.findAnnotationOnBean(beanName, annotationType);
-    }
+  @Override
+  public <T> Map<String, T> getBeansOfType(Class<T> type, boolean includeNonSingletons, boolean allowEagerInit) throws BeansException
+  {
+    return wrapped.getBeansOfType(type, includeNonSingletons, allowEagerInit);
+  }
 
-    @Override
-    public Object getBean(String name) throws BeansException
-    {
-        return wrapped.getBean(name);
-    }
+  @Override
+  public String[] getBeanNamesForAnnotation(Class<? extends Annotation> annotationType)
+  {
+    throw new UnsupportedOperationException("bean names for Annotation not managed");
+  }
 
-    @Override
-    public <T> T getBean(String name, Class<T> requiredType) throws BeansException
-    {
-        return wrapped.getBean(name, requiredType);
-    }
+  @Override
+  public Map<String, Object> getBeansWithAnnotation(Class<? extends Annotation> annotationType) throws BeansException
+  {
+    return wrapped.getBeansWithAnnotation(annotationType);
+  }
 
-    @Override
-    public <T> T getBean(Class<T> requiredType) throws BeansException
-    {
-        return wrapped.getBean(requiredType);
-    }
+  @Override
+  public <A extends Annotation> A findAnnotationOnBean(String beanName, Class<A> annotationType)
+  {
+    return wrapped.findAnnotationOnBean(beanName, annotationType);
+  }
 
-    @Override
-    public Object getBean(String name, Object... args) throws BeansException
-    {
-        return wrapped.getBean(name, args);
-    }
+  @Override
+  public Object getBean(String name) throws BeansException
+  {
+    return wrapped.getBean(name);
+  }
 
-    @Override
-    public boolean containsBean(String name)
-    {
-        return wrapped.containsBean(name);
-    }
+  @Override
+  public <T> T getBean(String name, Class<T> requiredType) throws BeansException
+  {
+    return wrapped.getBean(name, requiredType);
+  }
 
-    @Override
-    public boolean isSingleton(String name) throws NoSuchBeanDefinitionException
-    {
-        return wrapped.isSingleton(name);
-    }
+  @Override
+  public <T> T getBean(Class<T> requiredType) throws BeansException
+  {
+    return wrapped.getBean(requiredType);
+  }
 
-    @Override
-    public boolean isPrototype(String name) throws NoSuchBeanDefinitionException
-    {
-        return wrapped.isPrototype(name);
-    }
+  @Override
+  public Object getBean(String name, Object... args) throws BeansException
+  {
+    return wrapped.getBean(name, args);
+  }
 
-    @Override
-    public boolean isTypeMatch(String name, Class<?> targetType) throws NoSuchBeanDefinitionException
-    {
-        return wrapped.isTypeMatch(name, targetType);
-    }
+  @Override
+  public <T> T getBean(Class<T> requiredType, Object... args) throws BeansException
+  {
+    throw new UnsupportedOperationException("getBean by class and argumwent types =not implemented");
+  }
 
-    @Override
-    public Class<?> getType(String name) throws NoSuchBeanDefinitionException
-    {
-        return wrapped.getType(name);
-    }
+  @Override
+  public boolean containsBean(String name)
+  {
+    return wrapped.containsBean(name);
+  }
 
-    @Override
-    public String[] getAliases(String name)
-    {
-        return wrapped.getAliases(name);
-    }
+  @Override
+  public boolean isSingleton(String name) throws NoSuchBeanDefinitionException
+  {
+    return wrapped.isSingleton(name);
+  }
 
-    @Override
-    public BeanFactory getParentBeanFactory()
-    {
-        return wrapped.getParentBeanFactory();
-    }
+  @Override
+  public boolean isPrototype(String name) throws NoSuchBeanDefinitionException
+  {
+    return wrapped.isPrototype(name);
+  }
 
-    @Override
-    public boolean containsLocalBean(String name)
-    {
-        return wrapped.containsLocalBean(name);
-    }
+  @Override
+  public boolean isTypeMatch(String name, ResolvableType typeToMatch) throws NoSuchBeanDefinitionException
+  {
+    throw new UnsupportedOperationException("type matches nlot implemented");
+  }
 
-    @Override
-    public String getMessage(String code, Object[] args, String defaultMessage, Locale locale)
-    {
-        return wrapped.getMessage(code, args, defaultMessage, locale);
-    }
+  @Override
+  public boolean isTypeMatch(String name, Class<?> targetType) throws NoSuchBeanDefinitionException
+  {
+    return wrapped.isTypeMatch(name, targetType);
+  }
 
-    @Override
-    public String getMessage(String code, Object[] args, Locale locale) throws NoSuchMessageException
-    {
-        return wrapped.getMessage(code, args, locale);
-    }
+  @Override
+  public Class<?> getType(String name) throws NoSuchBeanDefinitionException
+  {
+    return wrapped.getType(name);
+  }
 
-    @Override
-    public String getMessage(MessageSourceResolvable resolvable, Locale locale) throws NoSuchMessageException
-    {
-        return wrapped.getMessage(resolvable, locale);
-    }
+  @Override
+  public String[] getAliases(String name)
+  {
+    return wrapped.getAliases(name);
+  }
 
-    @Override
-    public void publishEvent(ApplicationEvent event)
-    {
-        wrapped.publishEvent(event);
-    }
+  @Override
+  public BeanFactory getParentBeanFactory()
+  {
+    return wrapped.getParentBeanFactory();
+  }
 
-    @Override
-    public Resource[] getResources(String locationPattern) throws IOException
-    {
-        return wrapped.getResources(locationPattern);
-    }
+  @Override
+  public boolean containsLocalBean(String name)
+  {
+    return wrapped.containsLocalBean(name);
+  }
 
-    @Override
-    public Resource getResource(String location)
-    {
-        return wrapped.getResource(location);
-    }
+  @Override
+  public String getMessage(String code, Object[] args, String defaultMessage, Locale locale)
+  {
+    return wrapped.getMessage(code, args, defaultMessage, locale);
+  }
 
-    @Override
-    public ClassLoader getClassLoader()
-    {
-        return wrapped.getClassLoader();
-    }
+  @Override
+  public String getMessage(String code, Object[] args, Locale locale) throws NoSuchMessageException
+  {
+    return wrapped.getMessage(code, args, locale);
+  }
 
-    @Override
-    public void start()
-    {
-        wrapped.start();
-    }
+  @Override
+  public String getMessage(MessageSourceResolvable resolvable, Locale locale) throws NoSuchMessageException
+  {
+    return wrapped.getMessage(resolvable, locale);
+  }
 
-    @Override
-    public void stop()
-    {
-        wrapped.stop();
-    }
+  @Override
+  public void publishEvent(ApplicationEvent event)
+  {
+    wrapped.publishEvent(event);
+  }
 
-    @Override
-    public boolean isRunning()
-    {
-        return wrapped.isRunning();
-    }
+  @Override
+  public void publishEvent(Object event)
+  {
+    throw new UnsupportedOperationException("event publishing not supported");
+  }
+
+  @Override
+  public Resource[] getResources(String locationPattern) throws IOException
+  {
+    return wrapped.getResources(locationPattern);
+  }
+
+  @Override
+  public Resource getResource(String location)
+  {
+    return wrapped.getResource(location);
+  }
+
+  @Override
+  public ClassLoader getClassLoader()
+  {
+    return wrapped.getClassLoader();
+  }
+
+  @Override
+  public void start()
+  {
+    wrapped.start();
+  }
+
+  @Override
+  public void stop()
+  {
+    wrapped.stop();
+  }
+
+  @Override
+  public boolean isRunning()
+  {
+    return wrapped.isRunning();
+  }
 }

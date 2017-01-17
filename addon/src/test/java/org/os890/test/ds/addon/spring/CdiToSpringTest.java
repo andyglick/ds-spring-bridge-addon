@@ -18,16 +18,19 @@
  */
 package org.os890.test.ds.addon.spring;
 
-import junit.framework.Assert;
-import org.apache.deltaspike.testcontrol.api.junit.CdiTestRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.apache.deltaspike.testcontrol.api.junit.CdiTestRunner;
 import org.os890.test.ds.addon.spring.bean.cdi.ApplicationScopedCdiBean;
 import org.os890.test.ds.addon.spring.bean.spring.SingletonSpringBean;
 import org.springframework.context.ApplicationContext;
 
 import javax.inject.Inject;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+@SuppressWarnings("CdiInjectionPointsInspection")
 @RunWith(CdiTestRunner.class)
 public class CdiToSpringTest
 {
@@ -37,7 +40,7 @@ public class CdiToSpringTest
     @Test
     public void springLookupTest()
     {
-        Assert.assertNotNull(this.applicationContext.getBean(SingletonSpringBean.class));
-        Assert.assertNotNull(this.applicationContext.getBean(ApplicationScopedCdiBean.class));
+        assertThat(this.applicationContext.getBean(SingletonSpringBean.class)).isNotNull();
+        assertThat(this.applicationContext.getBean(ApplicationScopedCdiBean.class)).isNotNull();
     }
 }
