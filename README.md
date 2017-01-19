@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/andyglick/ds-spring-bridge-addon.svg?branch=1.0.0)](https://travis-ci.org/andyglick/ds-spring-bridge-addon)
-[![Coverage Status](https://coveralls.io/repos/github/andyglick/ds-spring-bridge-addon/badge.svg?branch=master)](https://coveralls.io/github/andyglick/ds-spring-bridge-addon?branch=1.0.0)
+[![Coverage Status](https://coveralls.io/repos/github/andyglick/ds-spring-bridge-addon/badge.svg?branch=master)](https://coveralls.io/github/andyglick/ds-spring-bridge-addon?branch=master)
 
 ds-spring-bridge-addon
 ======================
