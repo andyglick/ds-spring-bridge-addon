@@ -7,4 +7,4 @@ jdk:
 script: mvn clean verify -P openwebbeans,simple-logging
 
 after_success:
- - mvn clean test jacoco:report coveralls:report -P openwebbean,simple-slf4j -DrepoToken=XkBUcBKdzhG7VnpUuBlyfudlo3S61UKRB
+ - mvn clean test jacoco:report coveralls:report -P openwebbeans,simple-slf4j -DrepoToken=XkBUcBKdzhG7VnpUuBlyfudlo3S61UKRB
