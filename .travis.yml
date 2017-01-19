@@ -8,4 +8,4 @@ script:
   - mvn clean verify jacoco:report -P openwebbeans,simple-logging
 
 after_success:
- - mvn coveralls:report -P openwebbeans,simple-simple-logging -DrepoToken=XkBUcBKdzhG7VnpUuBlyfudlo3S61UKRB
+ - mvn coveralls:report -P openwebbeans,simple-logging -DrepoToken=XkBUcBKdzhG7VnpUuBlyfudlo3S61UKRB
