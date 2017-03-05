@@ -7,9 +7,8 @@ ds-spring-bridge-addon
 I've been using Spring as a  DI container and Maven as a build tool
 since 2004 and I have been pretty interested in at least finding out
 what capabilities the JEE CDI containers might offer, so I looked for
-and apparently found a competent bidirectional bridge implementation.
-
-THIS IS SO COOL THAT I COULD START JUMPING UP AND DOWN
+and apparently found a competent bidirectional bridge implementation
+from Spring to CDI and back again
 
 Anyway, the code that I found is all at least 2 years old, so many of
 the library references are/were out of date, so I will be bumping all
